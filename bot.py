@@ -9,25 +9,20 @@ from datetime import datetime
 import pytz
 
 # --- INICIO DE LA CONFIGURACIÓN ---
+# He puesto un placeholder para proteger tu URL. Vuelve a pegar la tuya aquí.
 DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1387958881057116180/wJB5n11JPY2FrUCaYq5_ceanWrFDxF2JYIjXHG4cFo_0bigLl8NRwEnTFgZrJo-5qneo'
 
+# ¡LISTA DE MONEDAS AMPLIADA Y CORREGIDA!
 LISTA_DE_SIMBOLOS = [
-    'BTC/USDT',
-    'ETH/USDT',
-    'SOL/USDT',
-    'XRP/USDT',
-    'DOGE/USDT',
-    'BNB/USDT',
-    'ADA/USDT',
-    'LINK/USDT',
-    'AVAX/USDT',
-    'MAT/USDT',
-    'LTC/USDT',
-    'SUI/USDT',
+    'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'BNBUSDT', 
+    'ADAUSDT', 'LINKUSDT', 'AVAXUSDT', 'MATICUSDT', 'LTCUSDT', 'SUIUSDT',
+    'DOTUSDT', 'TRXUSDT', 'SHIBUSDT', 'ETCUSDT', 'BCHUSDT', 'NEARUSDT',
+    'FILUSDT', 'APTUSDT', 'OPUSDT', 'ARB_USDT'
 ]
 
-TEMPORALIDAD = '1h'
-INTERVALO_REVISION_SEGUNDOS = 300
+# ¡TEMPORALIDAD ACTUALIZADA!
+TEMPORALIDAD = '30m' # <--- CAMBIADO A 30 MINUTOS
+INTERVALO_REVISION_SEGUNDOS = 240 # Revisamos cada 4 minutos
 
 # Parámetros MA_CROSS
 MA_CROSS_RAPIDA = 20
@@ -76,11 +71,9 @@ def enviar_alerta_discord(mensaje, ruta_grafico):
 def chequear_estrategia_ma_cross(df, simbolo):
     global estados_bot
     
-    # --- CAMBIO IMPORTANTE: CÁLCULO DE MEDIAS MÓVILES SIN PANDAS-TA ---
     df['MA_Rapida'] = df['close'].rolling(window=MA_CROSS_RAPIDA).mean()
     df['MA_Lenta'] = df['close'].rolling(window=MA_CROSS_LENTA).mean()
-    # --- FIN DEL CAMBIO ---
-
+    
     ultima = df.iloc[-1]
     penultima = df.iloc[-2]
     estado_simbolo = estados_bot.setdefault(simbolo, {})
