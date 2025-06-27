@@ -1,0 +1,6 @@
+pandas
+ccxt
+requests
+matplotlib
+pytz
+numpy
