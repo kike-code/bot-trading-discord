@@ -1,6 +1,6 @@
 import ccxt
 import pandas as pd
-import pandas_ta as ta # Necesario para el RSI
+import pandas_ta as ta 
 import time
 import requests
 import matplotlib.pyplot as plt
@@ -9,7 +9,7 @@ from datetime import datetime
 import pytz
 
 # --- INICIO DE LA CONFIGURACIÓN ---
-DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1389770196461420674/rhjPM_p8MHQzrbqIFcc_q2MKoGLqKxX0ZuYe7yID6A1Hecevxzridiu24KQ_9DuzqrS'
+DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1389794534476611684/_hKced3HWO7E3OFljwnEpmS1rmrm4_P8OCZP7uF5EW924xWiI48_y_uQJsE8FeY1pNml'
 
 # 1. SELECCIÓN DE ESTRATEGIA ('MA_CROSS' o 'RSI')
 ESTRATEGIA_ACTIVA = 'RSI' 
@@ -18,17 +18,17 @@ ESTRATEGIA_ACTIVA = 'RSI'
 CAPITAL_INICIAL_USDT = 20.0
 RIESGO_POR_OPERACION_PORCENTAJE = 5 
 
-# 3. LISTA DE CRIPTOMONEDAS
+# 3. LISTA DE CRIPTOMONEDAS (Con tu corrección)
 LISTA_DE_SIMBOLOS = [
     'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'BNBUSDT', 
     'ADAUSDT', 'LINKUSDT', 'AVAXUSDT', 'MATUSDT', 'LTCUSDT', 'SUIUSDT',
     'DOTUSDT', 'TRXUSDT', 'SHIBUSDT', 'ETCUSDT', 'BCHUSDT', 'NEARUSDT',
-    'FILUSDT', 'APTUSDT', 'OPUSDT', 'ARB_USDT'
+    'FILUSDT', 'APTUSDT', 'OPUSDT', 'ARBUSDT'
 ]
 
-# 4. CONFIGURACIÓN TÉCNICA
-TEMPORALIDAD = '30m'
-INTERVALO_REVISION_SEGUNDOS = 30 
+# 4. CONFIGURACIÓN TÉCNICA (Con tus ajustes)
+TEMPORALIDAD = '5m' # <-- AJUSTADO A 5 MINUTOS
+INTERVALO_REVISION_SEGUNDOS = 60 # <-- AJUSTADO A 1 MINUTO
 RATIO_RIESGO_BENEFICIO = 1.5
 VELAS_PARA_SL = 10
 # Parámetros para MA_CROSS
@@ -103,7 +103,7 @@ while True:
             velas = exchange.fetch_ohlcv(simbolo, TEMPORALIDAD, limit=200)
             df = pd.DataFrame(velas, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
             df.set_index(pd.to_datetime(df['timestamp'], unit='ms'), inplace=True)
-
+            
             if ESTRATEGIA_ACTIVA == 'MA_CROSS':
                 df['MA_Rapida'] = df['close'].rolling(window=MA_CROSS_RAPIDA).mean()
                 df['MA_Lenta'] = df['close'].rolling(window=MA_CROSS_LENTA).mean()
