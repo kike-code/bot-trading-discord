@@ -4,3 +4,4 @@ requests
 matplotlib
 pytz
 numpy
+pandas-ta
